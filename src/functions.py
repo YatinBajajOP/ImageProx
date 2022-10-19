@@ -11,7 +11,7 @@ def storeImage(image_file, operation):
     if image_file is not None:
         file_details = {"FileName":image_file.name,"FileType":image_file.type}
         # print(file_details)
-        path = "..//static//input//" + operation + "//" + image_file.name
+        path = ".//static//input//" + operation + "//" + image_file.name
         with open(path,"wb") as f: 
             f.write(image_file.getbuffer())         
         # st.success("Saved File")
@@ -24,7 +24,7 @@ def logTransform(path, c):
         c = 255 / np.log(1 + np.max(img))
     log_image = c * (np.log(img + 1))
     log_image = np.array(log_image, dtype = np.uint8)
-    output_path = "..//static//output//log//" + path.split("//")[-1]
+    output_path = ".//static//output//log//" + path.split("//")[-1]
     cv2.imwrite(output_path, log_image)
     st.image(output_path,  caption="Logged Image")
     btn = st.download_button(
