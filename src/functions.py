@@ -4,6 +4,8 @@ import streamlit as st
 from PIL import Image
 import random
 import numpy as np
+from datetime import datetime, time
+
 
 
 # Data management
@@ -124,6 +126,16 @@ def contrastStretching(path, r1, s1, r2, s2):
       data=output_path,
       file_name="contrast_" + path.split("//")[-1],
       mime="image/png")
+
+def removeFileCheck(path, thresholdHours = 6):
+    timeNow = datetime.now()
+    timestr = datetime.fromtimestamp(os.path.getmtime(path)).strftime('%d,%m,%Y,%H,%M,%S')
+    dateFile, monthFile, yearFile, hourFile, minutesFile, secondsFile = map(int, timestr.split(","))
+    if (datetime.now().year) > yearFile or datetime.now().month > monthFile or datetime.now().day > dateFile:
+        return True
+    elif datetime.now().hour - hourFile > thresholdHours:
+        return True
+    return False
 
 # Other functionalities
 def ImageToText(path):

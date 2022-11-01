@@ -1,5 +1,8 @@
 import streamlit as st
 from functions import *
+import os
+from datetime import datetime, time
+
 
 st.title("Welcome to ImageProx")
 choices = ["Transformations", "Spatial Filtering", "Custom Editing", "App presets", "Other Functionalities", "Adding noise"]
@@ -216,3 +219,12 @@ cv2.imwrite('salt-and-pepper-lena.jpg',
 else:
     presets = ["Youtube Thumbnail", "Instagram post", "Instagram Story", "Passport size"]
     preset = st.sidebar.radio("App presets", presets, key="Preset")
+
+if st.sidebar.button("Clear cache"):
+    root = "./static/"
+    for path, subdirs, files in os.walk(root):
+        for name in files:  
+            newPath = path + "/" + name
+            newPath = newPath.replace("\\","/")
+            if removeFileCheck(newPath):
+                os.remove(newPath)
